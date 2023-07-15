@@ -3,11 +3,15 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+import { use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { BarChart, LineChart } from "echarts/charts";
+import { TooltipComponent, GridComponent } from "echarts/components";
+
 import ECharts from "vue-echarts";
-import "echarts/lib/chart/bar";
-import "echarts/lib/chart/line";
-import "echarts/lib/component/tooltip";
 Vue.component("v-chart", ECharts);
+
+use([CanvasRenderer, BarChart, LineChart, TooltipComponent, GridComponent]);
 
 Vue.config.productionTip = false;
 
