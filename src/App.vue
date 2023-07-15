@@ -14,9 +14,9 @@
     </div>
     <footer>
       Developed by Anatoliy "Tony" Samara,
-      <a href="mailto:tony@bouldergyms.nl">tony@bouldergyms.nl</a>. Gym &amp; ascends
-      data provided by
-      <a href="https://toplogger.nu/" target="_blank">TopLogger</a>.
+      <a href="mailto:tony@bouldergyms.nl">tony@bouldergyms.nl</a>. Gym &amp; ascends data provided by
+      <a href="https://toplogger.nu/" target="_blank">TopLogger</a>.<br />
+      Frontend source code available on <a href="https://github.com/anatols/bouldergyms.nl" target="_blank">GitHub</a>.
     </footer>
   </div>
 </template>
