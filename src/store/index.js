@@ -73,7 +73,7 @@ export default new Vuex.Store({
       ) {
         state.settings.myGymId = state.gymsRanked.filter(({ id }) =>
           state.settings.enabledGymIds.includes(id)
-        )[0].id;
+        )[0]?.id;
       }
 
       saveSettingsToLocalStore(state.settings);

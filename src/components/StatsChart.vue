@@ -125,10 +125,10 @@ export default {
         },
       ];
 
-      const percentileMapper = new grades.PercentileMapper(
+      const percentileMapper = this.myGymId ? new grades.PercentileMapper(
         this.stats.gyms[this.myGymId].stats.percentiles,
         xAxisGradeScale
-      );
+      ) : undefined;
 
       const series = this.seriesForEnabledGyms((gym) => ({
         type: "line",
