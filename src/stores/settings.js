@@ -10,7 +10,7 @@ export const useSettingsStore = defineStore("settings", () => {
 
   const enabledGymIds = ref(
     stored?.enabledGymIds ??
-      gymBucketsRanked[0].gyms.slice(0, 2).map((gym) => gym.id)
+      gymBucketsRanked[0].gyms.slice(0, 2).map((gym) => gym.id),
   );
   const myGymId = ref(stored?.myGymId ?? gymBucketsRanked[0].gyms[0].id);
 
@@ -22,10 +22,10 @@ export const useSettingsStore = defineStore("settings", () => {
         JSON.stringify({
           enabledGymIds: enabledGymIds.value,
           myGymId: myGymId.value,
-        })
+        }),
       );
     },
-    { immediate: true }
+    { immediate: true },
   );
 
   function setGymEnabled(id, enabled) {
@@ -43,7 +43,7 @@ export const useSettingsStore = defineStore("settings", () => {
       enabledGymIds.value.length > 0
     ) {
       myGymId.value = gymsRanked.find(({ id }) =>
-        enabledGymIds.value.includes(id)
+        enabledGymIds.value.includes(id),
       )?.id;
     }
   }

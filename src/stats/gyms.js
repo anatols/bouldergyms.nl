@@ -8,12 +8,12 @@ const citySanitizingRegex = /[^a-z]/gi;
 export const gymBucketsRanked = take(Object.values(stats.gyms))
   .bucketedBy(
     (gym) => gym.city.replace(citySanitizingRegex, ""),
-    (cityA, cityB) => cityA.localeCompare(cityB)
+    (cityA, cityB) => cityA.localeCompare(cityB),
   )
   .sortedBy((bucket) => bucket.length, sortedBy.DESC)
   .sortedBy(
     (bucket) => (bucket[0].country_code === "NL" ? "" : bucket[0].country_code),
-    sortedBy.ASC
+    sortedBy.ASC,
   )
   .map((bucket) => ({
     city: bucket[0].city,

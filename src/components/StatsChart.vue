@@ -32,10 +32,10 @@ const { enabledGymIds, myGymId } = storeToRefs(settings);
 const gymsToDisplay = computed(() => [
   // Always add my gym first (bottom-most) to the chart
   ...gymsRanked.filter(
-    ({ id }) => enabledGymIds.value.includes(id) && id === myGymId.value
+    ({ id }) => enabledGymIds.value.includes(id) && id === myGymId.value,
   ),
   ...gymsRanked.filter(
-    ({ id }) => enabledGymIds.value.includes(id) && id !== myGymId.value
+    ({ id }) => enabledGymIds.value.includes(id) && id !== myGymId.value,
   ),
 ]);
 
@@ -68,7 +68,7 @@ function chartContentForPercentilesChart() {
     ...chartHelpers.lineStyle.forSeries(false),
     data: grades.mapGradeNamesToValues(
       grades.reducePercentilesToScale(gym.stats.percentiles, xAxisGradeScale),
-      percentageToFixed
+      percentageToFixed,
     ),
   }));
 
@@ -89,7 +89,7 @@ function chartContentForPopularityChart() {
     type: "bar",
     data: grades.mapGradeNamesToValues(
       grades.reducePopularitiesToScale(gym.stats.popularities, xAxisGradeScale),
-      percentageToFixed
+      percentageToFixed,
     ),
   }));
 
@@ -110,13 +110,13 @@ function chartContentForGradeComparisonChart() {
       true,
       gymsToDisplay.value.length <= 1
         ? ""
-        : `Grade you climb at ${stats.gyms[myGymId.value].name}`
+        : `Grade you climb at ${stats.gyms[myGymId.value].name}`,
     ),
     chartHelpers.axis.forMajorGradeScale(stats.grades.scales.french_major),
   ];
 
   const otherGyms = gymsToDisplay.value.filter(
-    (gym) => gym.id != myGymId.value
+    (gym) => gym.id != myGymId.value,
   );
 
   const yAxis = [
@@ -127,7 +127,7 @@ function chartContentForGradeComparisonChart() {
             otherGyms.length > 1
               ? `the other ${otherGyms.length} gyms`
               : otherGyms[0].name
-          }`
+          }`,
     ),
     {
       type: "category",
@@ -144,7 +144,7 @@ function chartContentForGradeComparisonChart() {
   const percentileMapper = myGymId.value
     ? new grades.PercentileMapper(
         stats.gyms[myGymId.value].stats.percentiles,
-        xAxisGradeScale
+        xAxisGradeScale,
       )
     : undefined;
 

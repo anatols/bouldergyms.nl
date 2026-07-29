@@ -9,7 +9,7 @@ function bucketedBy(array, callbackFn, defaultOperation = ASC) {
         compareValueArrays(
           callbackFn(buckets[buckets.length - 1][0]),
           callbackFn(item),
-          defaultOperation
+          defaultOperation,
         ) !== 0
       ) {
         buckets.push([item]);
@@ -18,7 +18,7 @@ function bucketedBy(array, callbackFn, defaultOperation = ASC) {
       }
       return buckets;
     },
-    []
+    [],
   );
 }
 

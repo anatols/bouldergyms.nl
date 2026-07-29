@@ -34,7 +34,7 @@ const cssProps = computed(() => ({
 }));
 
 const cssClass = computed(() =>
-  ["custom-checkbox", props.type, props.checked ? "checked" : ""].join(" ")
+  ["custom-checkbox", props.type, props.checked ? "checked" : ""].join(" "),
 );
 </script>
 

@@ -11,6 +11,7 @@ The project is a Vue.js app written in Javascript. It was started in mid 2020 on
 This repository misses history backing to the very beginning. This is on purpose, so that I could make it open source. The original repo where this project was maintained had the data collector part. I prefer not to publish that part to avoid exposing TopLogger's private APIs.
 
 ## Project setup
+
 Requires Node.js, see required version in `.nvmrc`.
 
 ```
@@ -18,24 +19,45 @@ npm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 npm run dev
 ```
 
 ### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
 ### Serves the production build locally
+
 ```
 npm run preview
 ```
 
 ### Lints and fixes files
+
 ```
 npm run lint
 ```
 
+### Formats all files
+
+Formatting is handled by [Prettier](https://prettier.io), configured in
+`.prettierrc.json`. ESLint is set up not to report formatting issues, so the two
+never disagree.
+
+```
+npm run format
+```
+
+To check formatting without writing changes (e.g. in CI):
+
+```
+npm run format:check
+```
+
 ### Customize configuration
+
 See the [Vite configuration reference](https://vite.dev/config/).

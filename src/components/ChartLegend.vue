@@ -23,8 +23,13 @@
     >
       Please select at least one gym.
     </div>
-    <div v-else-if="enableMyGymSelection" class="chart-tip">Select <i>your</i> gym above and click the chart or hover mouse over it for more info.</div>
-    <div v-else class="chart-tip">Click the chart or hover mouse over it for more info.</div>
+    <div v-else-if="enableMyGymSelection" class="chart-tip">
+      Select <i>your</i> gym above and click the chart or hover mouse over it
+      for more info.
+    </div>
+    <div v-else class="chart-tip">
+      Click the chart or hover mouse over it for more info.
+    </div>
   </div>
 </template>
 
@@ -44,7 +49,7 @@ const settings = useSettingsStore();
 const { enabledGymIds, myGymId } = storeToRefs(settings);
 
 const gymsToDisplay = computed(() =>
-  gymsRanked.filter(({ id }) => enabledGymIds.value.includes(id))
+  gymsRanked.filter(({ id }) => enabledGymIds.value.includes(id)),
 );
 </script>
 

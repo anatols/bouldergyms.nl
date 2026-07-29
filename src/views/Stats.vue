@@ -4,23 +4,17 @@
       <div class="main-column">
         <div class="header">
           <div v-if="chartType == chartTypes.PERCENTILES">
-            <h1>
-              What people can climb
-            </h1>
+            <h1>What people can climb</h1>
             How many climbers are able to climb each grade in a particular gym
             (as a percentage of all visitors of that gym)
           </div>
           <div v-else-if="chartType == chartTypes.POPULARITY">
-            <h1>
-              Most often climbed grades
-            </h1>
+            <h1>Most often climbed grades</h1>
             Out of all ascends logged, how many were for a specific grade (as a
             percentage of all ascends for each gym separately)
           </div>
           <div v-else-if="chartType == chartTypes.COMPARISON">
-            <h1>
-              Grade comparison
-            </h1>
+            <h1>Grade comparison</h1>
             What grade in another gym would be physically as hard as the one in
             yours
           </div>

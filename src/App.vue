@@ -2,11 +2,17 @@
   <div id="app" :style="styleVars">
     <div class="content">
       <div id="nav">
-        <router-link :to="routeFor(chartTypes.COMPARISON)">Comparison</router-link>
+        <router-link :to="routeFor(chartTypes.COMPARISON)"
+          >Comparison</router-link
+        >
         |
-        <router-link :to="routeFor(chartTypes.PERCENTILES)">Strength</router-link>
+        <router-link :to="routeFor(chartTypes.PERCENTILES)"
+          >Strength</router-link
+        >
         |
-        <router-link :to="routeFor(chartTypes.POPULARITY)">Popularity</router-link>
+        <router-link :to="routeFor(chartTypes.POPULARITY)"
+          >Popularity</router-link
+        >
         |
         <router-link to="/about">About the data</router-link>
       </div>
@@ -14,9 +20,13 @@
     </div>
     <footer>
       Developed by Anatoliy "Tony" Samara,
-      <a href="mailto:tony@bouldergyms.nl">tony@bouldergyms.nl</a>. Gym &amp; ascends data provided by
+      <a href="mailto:tony@bouldergyms.nl">tony@bouldergyms.nl</a>. Gym &amp;
+      ascends data provided by
       <a href="https://toplogger.nu/" target="_blank">TopLogger</a>.<br />
-      Frontend source code available on <a href="https://github.com/anatols/bouldergyms.nl" target="_blank">GitHub</a>.
+      Frontend source code available on
+      <a href="https://github.com/anatols/bouldergyms.nl" target="_blank"
+        >GitHub</a
+      >.
     </footer>
   </div>
 </template>

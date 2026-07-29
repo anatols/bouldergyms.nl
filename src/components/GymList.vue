@@ -12,14 +12,19 @@
         :key="gymBucket.city"
         :style="{
           gridRow: 'span ' + (gymBucket.gyms.length + 1),
-          backgroundColor: gymBucketColor[gymBucketIndex] }"
+          backgroundColor: gymBucketColor[gymBucketIndex],
+        }"
       >
         <div class="gym-city">
           <a
             class="pseudo-link"
             href=""
             v-on:click.prevent="onToggleBucket(gymBucket)"
-            >{{ gymBucket.country_code === "NL" ? "" : gymBucket.country_code + " - " }}{{ gymBucket.city }}</a
+            >{{
+              gymBucket.country_code === "NL"
+                ? ""
+                : gymBucket.country_code + " - "
+            }}{{ gymBucket.city }}</a
           >
         </div>
         <div v-for="gym in gymBucket.gyms" :key="gym.id">
@@ -76,8 +81,8 @@ const gymExtraData = computed(() =>
           .replace(" " + gym.city, "")
           .replace(gym.city + " ", ""),
       },
-    ])
-  )
+    ]),
+  ),
 );
 
 function onHideAllClicked() {
@@ -86,11 +91,9 @@ function onHideAllClicked() {
 
 function onToggleBucket(gymBucket) {
   const allEnabled = gymBucket.gyms.every(
-    (gym) => gymExtraData.value[gym.id].enabled
+    (gym) => gymExtraData.value[gym.id].enabled,
   );
-  gymBucket.gyms.forEach((gym) =>
-    settings.setGymEnabled(gym.id, !allEnabled)
-  );
+  gymBucket.gyms.forEach((gym) => settings.setGymEnabled(gym.id, !allEnabled));
 }
 </script>
 

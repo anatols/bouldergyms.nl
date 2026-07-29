@@ -14,9 +14,7 @@
       people who are actually able to climb that grade in that particular gym.
     </p>
 
-    <p>
-      In other words, you can read the strength chart this way:
-    </p>
+    <p>In other words, you can read the strength chart this way:</p>
 
     <p class="thought">
       If I climb 6b at Cragdogs gym, and the chart shows 20% for 6b for
@@ -55,9 +53,7 @@
       one gym to grades of another.
     </p>
 
-    <p>
-      You can think of it this way:
-    </p>
+    <p>You can think of it this way:</p>
 
     <p class="thought">
       A 6b at Cragdogs gym can be climbed by 20% visitors. At Offbelay gym 20%
