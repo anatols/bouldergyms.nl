@@ -2,11 +2,11 @@
   <div id="app" :style="styleVars">
     <div class="content">
       <div id="nav">
-        <router-link :to="chartTypes.COMPARISON">Comparison</router-link>
+        <router-link :to="routeFor(chartTypes.COMPARISON)">Comparison</router-link>
         |
-        <router-link :to="chartTypes.PERCENTILES">Strength</router-link>
+        <router-link :to="routeFor(chartTypes.PERCENTILES)">Strength</router-link>
         |
-        <router-link :to="chartTypes.POPULARITY">Popularity</router-link>
+        <router-link :to="routeFor(chartTypes.POPULARITY)">Popularity</router-link>
         |
         <router-link to="/about">About the data</router-link>
       </div>
@@ -21,18 +21,16 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import chartTypes from "@/chart/chart-types";
 import styleVars from "@/style/vars";
 
-export default {
-  mixins: [chartTypes.mixin, styleVars.mixin],
-};
+function routeFor(chartType) {
+  return { name: "Stats", params: { chartType } };
+}
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Oswald&family=Pontano+Sans&display=swap");
-
 html body {
   margin: 0;
   padding: 0;

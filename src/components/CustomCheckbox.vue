@@ -1,63 +1,41 @@
 <template>
   <div :class="cssClass" :style="cssProps">
     <input
-      :id="uniqueId"
+      :id="inputId"
       type="checkbox"
       :checked="checked"
-      v-on:change="$emit('change', !checked)"
+      @change="emit('change', !checked)"
     />
-    <label :for="uniqueId"
-      ><span class="frame"><div class="mark"/></span><slot
+    <label :for="inputId"
+      ><span class="frame"><span class="mark"></span></span><slot
     /></label>
   </div>
 </template>
 
-<script>
-import uniqueId from "@/utils/uniqueId";
+<script setup>
+import { computed, useId } from "vue";
 
-export default {
-  name: "CustomCheckbox",
-  props: {
-    checked: Boolean,
-    color: String,
-    type: {
-      type: String,
-      default: "checkbox",
-      validator: function(value) {
-        return ["checkbox", "marker", "radio"].includes(value);
-      },
-    },
+const props = defineProps({
+  checked: Boolean,
+  color: String,
+  type: {
+    type: String,
+    default: "checkbox",
+    validator: (value) => ["checkbox", "marker", "radio"].includes(value),
   },
-  mixins: [uniqueId.mixin],
-  computed: {
-    cssProps() {
-      return {
-        "--props-color": this.color,
-      };
-    },
-    cssClass() {
-      return ["custom-checkbox", this.type, this.checked ? "checked" : ""].join(
-        " "
-      );
-    },
-    frameClass() {
-      return "checkbox" + (this.disabled ? " disabled" : "");
-    },
-    frameStyle() {
-      return this.checked ? {} : { borderColor: this.color };
-    },
-    markClass() {
-      return (
-        "checkmark" +
-        (this.disabled ? " disabled" : "") +
-        (this.checked ? " checked" : "")
-      );
-    },
-    markStyle() {
-      return this.disabled ? {} : { backgroundColor: this.color };
-    },
-  },
-};
+});
+
+const emit = defineEmits(["change"]);
+
+const inputId = useId();
+
+const cssProps = computed(() => ({
+  "--props-color": props.color,
+}));
+
+const cssClass = computed(() =>
+  ["custom-checkbox", props.type, props.checked ? "checked" : ""].join(" ")
+);
 </script>
 
 <style scoped>
@@ -85,6 +63,7 @@ label {
 }
 
 .mark {
+  display: block;
   width: 100%;
   height: 100%;
   border: none;

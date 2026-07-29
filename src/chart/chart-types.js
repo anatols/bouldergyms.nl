@@ -8,10 +8,4 @@ export default {
   ...chartTypes,
 
   validTypes: Object.values(chartTypes),
-
-  mixin: {
-    created() {
-      this.chartTypes = chartTypes;
-    },
-  },
 };

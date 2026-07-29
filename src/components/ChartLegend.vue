@@ -6,7 +6,7 @@
           :checked="gym.id === myGymId"
           :color="gym.chart_color"
           :type="enableMyGymSelection ? 'radio' : 'marker'"
-          v-on:change="setMyGymId(gym.id)"
+          v-on:change="settings.setMyGymId(gym.id)"
           >{{ gym.name }}</CustomCheckbox
         >
       </div>
@@ -28,34 +28,24 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "vuex";
-import { mapMutations } from "vuex";
+<script setup>
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
 
 import CustomCheckbox from "@/components/CustomCheckbox.vue";
+import { gymsRanked } from "@/stats/gyms";
+import { useSettingsStore } from "@/stores/settings";
 
-export default {
-  name: "ChartSettings",
-  props: ["enable-my-gym-selection"],
-  components: {
-    CustomCheckbox,
-  },
-  methods: {
-    ...mapMutations(["setMyGymId"]),
-  },
-  computed: {
-    ...mapState({
-      enabledGymIds: (state) => state.settings.enabledGymIds,
-      gymsRanked: (state) => state.gymsRanked,
-      myGymId: (state) => state.settings.myGymId,
-    }),
-    gymsToDisplay() {
-      return this.gymsRanked.filter(({ id }) =>
-        this.enabledGymIds.includes(id)
-      );
-    },
-  },
-};
+defineProps({
+  enableMyGymSelection: Boolean,
+});
+
+const settings = useSettingsStore();
+const { enabledGymIds, myGymId } = storeToRefs(settings);
+
+const gymsToDisplay = computed(() =>
+  gymsRanked.filter(({ id }) => enabledGymIds.value.includes(id))
+);
 </script>
 
 <style scoped>

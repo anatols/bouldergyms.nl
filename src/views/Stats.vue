@@ -35,36 +35,20 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+
 import chartTypes from "@/chart/chart-types";
 
 import GymList from "@/components/GymList.vue";
 import ChartLegend from "@/components/ChartLegend.vue";
 import StatsChart from "@/components/StatsChart.vue";
 
-export default {
-  name: "Stats",
-  mixins: [chartTypes.mixin],
-  components: {
-    StatsChart,
-    GymList,
-    ChartLegend,
-  },
-  computed: {
-    chartType() {
-      return this.$route.params.chartType;
-    },
-  },
-  beforeRouteEnter(to, from, next) {
-    if (!chartTypes.validTypes.includes(to.params.chartType)) {
-      next({
-        path: chartTypes.COMPARISON,
-      });
-    } else {
-      next();
-    }
-  },
-};
+const route = useRoute();
+
+// Guaranteed to be a valid chart type: the route guard redirects anything else.
+const chartType = computed(() => route.params.chartType);
 </script>
 
 <style scoped>

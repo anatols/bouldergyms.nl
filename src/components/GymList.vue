@@ -10,8 +10,8 @@
         class="gym-bucket"
         v-for="(gymBucket, gymBucketIndex) in gymBucketsRanked"
         :key="gymBucket.city"
-        :style="{ 
-          gridRow: 'span ' + (gymBucket.gyms.length + 1), 
+        :style="{
+          gridRow: 'span ' + (gymBucket.gyms.length + 1),
           backgroundColor: gymBucketColor[gymBucketIndex] }"
       >
         <div class="gym-city">
@@ -26,7 +26,7 @@
           <CustomCheckbox
             :checked="gymExtraData[gym.id].enabled"
             :color="gym.chart_color"
-            v-on:change="setGymEnabled({ id: gym.id, enabled: $event })"
+            v-on:change="settings.setGymEnabled(gym.id, $event)"
             >{{ gymExtraData[gym.id].listName }}
           </CustomCheckbox>
         </div>
@@ -35,69 +35,63 @@
   </div>
 </template>
 
-<script>
-import { mapMutations } from "vuex";
-import { mapState } from "vuex";
+<script setup>
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
 
 import CustomCheckbox from "@/components/CustomCheckbox.vue";
+import { gymBucketsRanked, gymsRanked } from "@/stats/gyms";
+import { useSettingsStore } from "@/stores/settings";
 
-export default {
-  components: { CustomCheckbox },
-  computed: {
-    ...mapState({
-      enabledGymIds: (state) => state.settings.enabledGymIds,
-      gymExtraData(state) {
-        return Object.fromEntries(
-          state.gymsRanked.map((gym) => [
-            gym.id,
-            {
-              enabled: this.enabledGymIds.includes(gym.id),
-              listName: gym.name
-                .replace(" " + gym.city, "")
-                .replace(gym.city + " ", ""),
-            },
-          ])
-        );
-      },
-      myGymId: (state) => state.settings.myGymId,
-      gymBucketsRanked: (state) => state.gymBucketsRanked,
-    }),
-    gymBucketColor() {
-      let lastCountryCode = this.gymBucketsRanked[0].country_code;
-      let colorIndex = 0;
-      const colors = ["var(--primary-background-color)", "#efefef", "#efefe7", "#e7e7ef"]
-      return this.gymBucketsRanked.map((bucket) => {
-        if (bucket.country_code != lastCountryCode) {
-          lastCountryCode = bucket.country_code;
-          colorIndex = (colorIndex + 1) % colors.length;
-        }
-        return colors[colorIndex];
-      });
+// Alternating background shades, changing every time the country changes.
+const gymBucketColor = (() => {
+  const colors = [
+    "var(--primary-background-color)",
+    "#efefef",
+    "#efefe7",
+    "#e7e7ef",
+  ];
+  let lastCountryCode = gymBucketsRanked[0].country_code;
+  let colorIndex = 0;
+
+  return gymBucketsRanked.map((bucket) => {
+    if (bucket.country_code != lastCountryCode) {
+      lastCountryCode = bucket.country_code;
+      colorIndex = (colorIndex + 1) % colors.length;
     }
-  },
-  methods: {
-    ...mapMutations(["setGymEnabled"]),
-    onHideAllClicked() {
-      [...this.enabledGymIds].forEach((id) => {
-        this.setGymEnabled({
-          id,
-          enabled: false,
-        });
-      });
-    },
-    onToggleBucket(gymBucket) {
-      const allEnabled = gymBucket.gyms.every(
-        (gym) => this.gymExtraData[gym.id].enabled
-      );
-      gymBucket.gyms.forEach((gym) =>
-        this.setGymEnabled({
-          id: gym.id,
-          enabled: !allEnabled,
-        })
-      );
-    },
-  },
-};
+    return colors[colorIndex];
+  });
+})();
+
+const settings = useSettingsStore();
+const { enabledGymIds } = storeToRefs(settings);
+
+const gymExtraData = computed(() =>
+  Object.fromEntries(
+    gymsRanked.map((gym) => [
+      gym.id,
+      {
+        enabled: enabledGymIds.value.includes(gym.id),
+        listName: gym.name
+          .replace(" " + gym.city, "")
+          .replace(gym.city + " ", ""),
+      },
+    ])
+  )
+);
+
+function onHideAllClicked() {
+  [...enabledGymIds.value].forEach((id) => settings.setGymEnabled(id, false));
+}
+
+function onToggleBucket(gymBucket) {
+  const allEnabled = gymBucket.gyms.every(
+    (gym) => gymExtraData.value[gym.id].enabled
+  );
+  gymBucket.gyms.forEach((gym) =>
+    settings.setGymEnabled(gym.id, !allEnabled)
+  );
+}
 </script>
 
 <style scoped>

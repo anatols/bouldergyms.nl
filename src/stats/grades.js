@@ -173,7 +173,7 @@ function PercentileMapper(baseGradePercentilePairs, baseGradeScale) {
       // in between scale steps.
       // note: findGradeIndex rounds down.
       let targetGradeIndex = findGradeIndex(targetGrade, targetGradeScale);
-      let targetGradeNames = [];
+      let targetGradeNames;
       const epsilon = 0.05;
       if (
         Math.abs(targetGradeScale[targetGradeIndex][0] - targetGrade) <
