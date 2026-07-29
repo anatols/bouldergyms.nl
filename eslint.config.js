@@ -1,5 +1,6 @@
 import js from "@eslint/js";
 import pluginVue from "eslint-plugin-vue";
+import configPrettier from "eslint-config-prettier/flat";
 
 export default [
   {
@@ -7,6 +8,8 @@ export default [
   },
   js.configs.recommended,
   ...pluginVue.configs["flat/essential"],
+  // Must stay last: turns off rules that would fight Prettier.
+  configPrettier,
   {
     languageOptions: {
       ecmaVersion: "latest",
