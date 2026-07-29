@@ -3,7 +3,7 @@ import { ref, watch } from "vue";
 
 import { gymBucketsRanked, gymsRanked } from "@/stats/gyms";
 
-const STORAGE_KEY = "settings";
+const STORAGE_KEY = "settings_2";
 
 export const useSettingsStore = defineStore("settings", () => {
   const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
