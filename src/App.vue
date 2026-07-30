@@ -20,8 +20,8 @@
     </div>
     <footer>
       Developed by Anatoliy "Tony" Samara,
-      <a href="mailto:tony@bouldergyms.nl">tony@bouldergyms.nl</a>. Gym &amp;
-      ascends data provided by
+      <a href="mailto:tony@bouldergyms.nl">tony@bouldergyms.nl</a>. <br />
+      Gym &amp; tops data provided by
       <a href="https://toplogger.nu/" target="_blank">TopLogger</a>.<br />
       Frontend source code available on
       <a href="https://github.com/anatols/bouldergyms.nl" target="_blank"
