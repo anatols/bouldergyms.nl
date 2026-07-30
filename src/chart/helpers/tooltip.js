@@ -11,7 +11,7 @@ function forPercentileChart() {
               .sort((paramA, paramB) => paramB.value[1] - paramA.value[1])
               .map(
                 (param) =>
-                  `${param.marker}${param.value[1]}% at ${param.seriesName}`
+                  `${param.marker}${param.value[1]}% at ${param.seriesName}`,
               )
               .join("<br/>")
           );
@@ -39,7 +39,7 @@ function forPopularityChart() {
               .sort((paramA, paramB) => paramB.value[1] - paramA.value[1])
               .map(
                 (param) =>
-                  `${param.marker}${param.value[1]}% cases at ${param.seriesName}`
+                  `${param.marker}${param.value[1]}% cases at ${param.seriesName}`,
               )
               .join("<br/>")
           );
@@ -64,7 +64,7 @@ function forGradeComparisonChart(myGymId) {
         const myGymGradeName = myGymParam.value[0];
 
         const otherGymParams = params.filter(
-          (param) => param.seriesId != myGymId
+          (param) => param.seriesId != myGymId,
         );
 
         if (otherGymParams.length === 0) {

@@ -31,13 +31,13 @@ function reduceToScale(gradeValuePairs, gradeScale, initialValue, reducerFn) {
 
         accumulator[scaleGrade].value = reducerFn(
           accumulator[scaleGrade].value,
-          value
+          value,
         );
 
         return accumulator;
-      }, {})
+      }, {}),
     ),
-    (accum) => accum.grade
+    (accum) => accum.grade,
   );
 }
 
@@ -46,7 +46,7 @@ function reducePercentilesToScale(gradeValuePairs, gradeScale) {
     gradeValuePairs,
     gradeScale,
     0,
-    (lastValue, currentValue) => Math.max(lastValue, currentValue)
+    (lastValue, currentValue) => Math.max(lastValue, currentValue),
   );
 }
 
@@ -55,7 +55,7 @@ function reducePopularitiesToScale(gradeValuePairs, gradeScale) {
     gradeValuePairs,
     gradeScale,
     0,
-    (sum, currentValue) => sum + currentValue
+    (sum, currentValue) => sum + currentValue,
   );
 }
 
@@ -73,19 +73,22 @@ function gradeNames(gradeScale) {
 function findOverlappingScaleRange(
   gradeValuePairsA,
   gradeValuePairsB,
-  gradeScale
+  gradeScale,
 ) {
   const minGradeIndex = Math.max(
     findGradeIndex(gradeValuePairsA[0][0], gradeScale),
-    findGradeIndex(gradeValuePairsB[0][0], gradeScale)
+    findGradeIndex(gradeValuePairsB[0][0], gradeScale),
   );
 
   const maxGradeIndex = Math.min(
     findGradeIndex(
       gradeValuePairsA[gradeValuePairsA.length - 1][0],
-      gradeScale
+      gradeScale,
     ),
-    findGradeIndex(gradeValuePairsB[gradeValuePairsB.length - 1][0], gradeScale)
+    findGradeIndex(
+      gradeValuePairsB[gradeValuePairsB.length - 1][0],
+      gradeScale,
+    ),
   );
 
   return gradeScale.slice(minGradeIndex, maxGradeIndex + 1);
@@ -94,19 +97,22 @@ function findOverlappingScaleRange(
 function PercentileMapper(baseGradePercentilePairs, baseGradeScale) {
   const reducedBasePercentiles = reducePercentilesToScale(
     baseGradePercentilePairs,
-    baseGradeScale
+    baseGradeScale,
   );
 
   const baseGradeToPercentilePW = Piecewise(
     reducedBasePercentiles.map(({ grade }) => grade),
-    reducedBasePercentiles.map(({ value }) => value)
+    reducedBasePercentiles.map(({ value }) => value),
   );
 
-  this.mapPercentiles = function(targetGradePercentilePairs, targetGradeScale) {
+  this.mapPercentiles = function (
+    targetGradePercentilePairs,
+    targetGradeScale,
+  ) {
     const overlappingScaleRange = findOverlappingScaleRange(
       baseGradePercentilePairs,
       targetGradePercentilePairs,
-      baseGradeScale
+      baseGradeScale,
     );
 
     // If we're mapping from gym to itself we want a nice straight line,
@@ -121,11 +127,11 @@ function PercentileMapper(baseGradePercentilePairs, baseGradeScale) {
 
     const reducedTargetPercentiles = reducePercentilesToScale(
       targetGradePercentilePairs,
-      baseGradeScale
+      baseGradeScale,
     );
     const targetGradeToPercentilePW = Piecewise(
       reducedTargetPercentiles.map(({ grade }) => grade),
-      reducedTargetPercentiles.map(({ value }) => value)
+      reducedTargetPercentiles.map(({ value }) => value),
     );
 
     // Percentiles are meaningful for scale ranges of each gym separately.
@@ -155,16 +161,16 @@ function PercentileMapper(baseGradePercentilePairs, baseGradeScale) {
       reducedTargetPercentilesSortedByValue.map(
         ({ value }) =>
           (value - minTargetPercentile) /
-          (maxTargetPercentile - minTargetPercentile)
+          (maxTargetPercentile - minTargetPercentile),
       ),
-      reducedTargetPercentilesSortedByValue.map(({ grade }) => grade)
+      reducedTargetPercentilesSortedByValue.map(({ grade }) => grade),
     );
 
     return overlappingScaleRange.map(([baseGrade, baseGradeName]) => {
       const basePercentile = Math.max(
         (baseGradeToPercentilePW(baseGrade) - minBasePercentile) /
           (maxBasePercentile - minBasePercentile),
-        0
+        0,
       );
 
       const targetGrade = targetPercentileToGradePW(basePercentile);
@@ -173,7 +179,7 @@ function PercentileMapper(baseGradePercentilePairs, baseGradeScale) {
       // in between scale steps.
       // note: findGradeIndex rounds down.
       let targetGradeIndex = findGradeIndex(targetGrade, targetGradeScale);
-      let targetGradeNames = [];
+      let targetGradeNames;
       const epsilon = 0.05;
       if (
         Math.abs(targetGradeScale[targetGradeIndex][0] - targetGrade) <

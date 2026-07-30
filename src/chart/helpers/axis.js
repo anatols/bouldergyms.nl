@@ -60,23 +60,23 @@ function forGradeComparison(name) {
     name,
     nameLocation: "middle",
     nameGap: 25,
-    min: -1.34,
-    max: 1.34,
+    min: -134,
+    max: 134,
     inverse: true,
-    interval: 1 / 3,
+    interval: 33,
     show: true,
     axisLabel: {
       formatter: (value) => {
         const sign = value < 0 ? "-" : "+";
         const absValue = Math.abs(value);
 
-        if (absValue > 1.1) {
+        if (absValue > 110) {
           return sign + "1 \u2153";
-        } else if (absValue > 0.7) {
+        } else if (absValue > 70) {
           return sign + "1";
-        } else if (absValue > 0.5) {
+        } else if (absValue > 50) {
           return sign + "\u2154";
-        } else if (absValue > 0.2) {
+        } else if (absValue > 20) {
           return sign + "\u2153";
         }
 

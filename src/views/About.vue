@@ -1,5 +1,18 @@
 <template>
   <div class="about">
+    <h1>Data source</h1>
+    <p>
+      All charts on this website are made by analyzing tops reported in
+      <a href="https://toplogger.nu/" target="_blank">TopLogger</a> app. More
+      specifically, I'm looking at all boulders set withing the last year or so
+      in all gyms.
+    </p>
+
+    <p>
+      The data is <i>not</i> live (I get asked this often), but I update it once
+      in a while. Last update I did on {{ lastUpdate }}.
+    </p>
+
     <h1>Strength data</h1>
     <p>
       The idea behind the strength chart is to show, for each grade, how many
@@ -14,9 +27,7 @@
       people who are actually able to climb that grade in that particular gym.
     </p>
 
-    <p>
-      In other words, you can read the strength chart this way:
-    </p>
+    <p>In other words, you can read the strength chart this way:</p>
 
     <p class="thought">
       If I climb 6b at Cragdogs gym, and the chart shows 20% for 6b for
@@ -55,9 +66,7 @@
       one gym to grades of another.
     </p>
 
-    <p>
-      You can think of it this way:
-    </p>
+    <p>You can think of it this way:</p>
 
     <p class="thought">
       A 6b at Cragdogs gym can be climbed by 20% visitors. At Offbelay gym 20%
@@ -84,7 +93,8 @@
     <p>
       As you might have noticed, not all gyms are on the list. Well, first, I'm
       obviously limited to gyms that are available on TopLogger. Unfortunately,
-      not all gyms in the Netherlands use it.
+      not all gyms in the Netherlands use it, and outside of the Netherlands
+      it's only starting to gain traction.
     </p>
 
     <p>
@@ -135,6 +145,17 @@
     <p>Tony</p>
   </div>
 </template>
+
+<script setup>
+import stats from "@/stats/stats.json";
+
+const lastUpdate = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+}).format(new Date(stats.time_generated));
+</script>
 
 <style>
 .about {

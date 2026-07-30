@@ -1,9 +1,8 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Stats from "../views/Stats.vue";
-import About from "../views/About.vue";
+import { createRouter, createWebHistory } from "vue-router";
 
-Vue.use(VueRouter);
+import chartTypes from "@/chart/chart-types";
+import About from "@/views/About.vue";
+import Stats from "@/views/Stats.vue";
 
 const routes = [
   {
@@ -15,11 +14,15 @@ const routes = [
     path: "/:chartType?",
     name: "Stats",
     component: Stats,
+    // Anything that isn't a known chart type falls back to the comparison chart.
+    beforeEnter: (to) =>
+      chartTypes.validTypes.includes(to.params.chartType)
+        ? true
+        : { name: "Stats", params: { chartType: chartTypes.COMPARISON } },
   },
 ];
 
-const router = new VueRouter({
+export default createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
-
-export default router;

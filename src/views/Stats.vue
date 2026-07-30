@@ -4,23 +4,17 @@
       <div class="main-column">
         <div class="header">
           <div v-if="chartType == chartTypes.PERCENTILES">
-            <h1>
-              What people can climb
-            </h1>
+            <h1>What people can climb</h1>
             How many climbers are able to climb each grade in a particular gym
             (as a percentage of all visitors of that gym)
           </div>
           <div v-else-if="chartType == chartTypes.POPULARITY">
-            <h1>
-              Most often climbed grades
-            </h1>
+            <h1>Most often climbed grades</h1>
             Out of all ascends logged, how many were for a specific grade (as a
             percentage of all ascends for each gym separately)
           </div>
           <div v-else-if="chartType == chartTypes.COMPARISON">
-            <h1>
-              Grade comparison
-            </h1>
+            <h1>Grade comparison</h1>
             What grade in another gym would be physically as hard as the one in
             yours
           </div>
@@ -35,36 +29,20 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+
 import chartTypes from "@/chart/chart-types";
 
 import GymList from "@/components/GymList.vue";
 import ChartLegend from "@/components/ChartLegend.vue";
 import StatsChart from "@/components/StatsChart.vue";
 
-export default {
-  name: "Stats",
-  mixins: [chartTypes.mixin],
-  components: {
-    StatsChart,
-    GymList,
-    ChartLegend,
-  },
-  computed: {
-    chartType() {
-      return this.$route.params.chartType;
-    },
-  },
-  beforeRouteEnter(to, from, next) {
-    if (!chartTypes.validTypes.includes(to.params.chartType)) {
-      next({
-        path: chartTypes.COMPARISON,
-      });
-    } else {
-      next();
-    }
-  },
-};
+const route = useRoute();
+
+// Guaranteed to be a valid chart type: the route guard redirects anything else.
+const chartType = computed(() => route.params.chartType);
 </script>
 
 <style scoped>

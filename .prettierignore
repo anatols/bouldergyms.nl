@@ -1,0 +1,6 @@
+dist
+node_modules
+package-lock.json
+
+# Generated data, not hand-edited.
+src/stats/stats.json
